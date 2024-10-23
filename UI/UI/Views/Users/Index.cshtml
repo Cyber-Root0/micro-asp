@@ -1,0 +1,48 @@
+﻿@model List<Shared.ViewModels.UserModel>
+@{
+    var errorLogs = ViewData["ErrorLogs"] as string;
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to users page</h1>
+</div>
+@if (!string.IsNullOrEmpty(errorLogs))
+{
+    <div class="alert alert-danger" role="alert">
+        @errorLogs
+    </div>
+}
+<div class="d-flex justify-content-end mb-3">
+    <a href="@Url.Action("Create", "Users")" class="btn btn-primary">Create New User</a>
+</div>
+<div>
+    <h2>User List</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Is Admin</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Name</td>
+                    <td>@user.Email</td>
+                    <td>@user.Age</td>
+                    <td>@user.IsSysAdmin</td>
+                    <td>
+                        <a href="@Url.Action("UserDetails", new { id = user.Id })" class="btn btn-info">Details</a>
+                        <a href="@Url.Action("UserEdit", new { id = user.Id })" class="btn btn-warning">Edit</a>
+                        <a href="@Url.Action("UserDelete", new { id = user.Id, name = user.Name })" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
